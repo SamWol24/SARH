@@ -18,6 +18,8 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('departamentos', DepartamentoController::class);
     Route::resource('empleados', EmpleadoController::class);
     Route::resource('asistencias', AsistenciaController::class);
+
+    Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
 });
 
 require __DIR__.'/auth.php';
