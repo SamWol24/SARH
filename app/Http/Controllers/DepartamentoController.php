@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Controller;
 use App\Models\Departamento;
 use Illuminate\Http\Request;
 
@@ -52,11 +53,12 @@ class DepartamentoController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Departamento $departamento)
+    /**public function show(Departamento $departamento)
     {
         $empleado = Empleado::with('departamento')->findOrFail($departamento);
         return view('departamentos.show', compact('departamento'));
     }
+        */
 
     /**
      * Show the form for editing the specified resource.

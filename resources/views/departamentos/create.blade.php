@@ -1,57 +1,19 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Crear Departamento</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
-<body>
-    <div class="container mt-4">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="card">
-                    <div class="card-header">
-                        <h3>Crear Departamento</h3>
-                    </div>
-                    <div class="card-body">
-                        <form method="POST" action="{{ route('departamentos.store') }}">
-                            @csrf
+@extends('layouts.app')
 
-                            <div class="mb-3">
-                                <label for="nombre" class="form-label">Nombre</label>
-                                <input type="text" class="form-control @error('nombre') is-invalid @enderror" id="nombre" name="nombre" value="{{ old('nombre') }}" required>
-                                @error('nombre')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
-                            </div>
+@section('content')
+<div class="container">
+    <h1>Crear Departamento</h1>
 
-                            <div class="mb-3">
-                                <label for="ubicacion" class="form-label">Ubicación</label>
-                                <input type="text" class="form-control @error('ubicacion') is-invalid @enderror" id="ubicacion" name="ubicacion" value="{{ old('ubicacion') }}" required>
-                                @error('ubicacion')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
-                            </div>
+    <form action="{{ route('departamentos.store') }}" method="POST">
+        @csrf
 
-                            <div class="mb-3">
-                                <label for="numero_telefono" class="form-label">Número de Teléfono</label>
-                                <input type="text" class="form-control @error('numero_telefono') is-invalid @enderror" id="numero_telefono" name="numero_telefono" value="{{ old('numero_telefono') }}" required>
-                                @error('numero_telefono')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
-                            </div>
-
-                            <div class="d-flex justify-content-end">
-                                <a href="{{ route('departamentos.index') }}" class="btn btn-secondary me-2">Cancelar</a>
-                                <button type="submit" class="btn btn-primary">Guardar</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
+        <div class="mb-3">
+            <label for="nombre">Nombre del Departamento</label>
+            <input type="text" id="nombre" name="nombre" class="form-control" required>
         </div>
-    </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>
+
+        <button class="btn btn-success">Guardar</button>
+        <a href="{{ route('departamentos.index') }}" class="btn btn-secondary">Cancelar</a>
+    </form>
+</div>
+@endsection

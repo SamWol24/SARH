@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Controller;
 use App\Models\Asistencia;
 use App\Models\Empleado;
 use Illuminate\Http\Request;
@@ -56,9 +57,10 @@ class AsistenciaController extends Controller
      */
     public function show(Asistencia $asistencia)
     {
-        $asistencia = Asistencia::with('empleado')->findOrFail($asistencia);
+        $asistencia->load('empleado');
         return view('asistencias.show', compact('asistencia'));
     }
+    
 
     /**
      * Show the form for editing the specified resource.
