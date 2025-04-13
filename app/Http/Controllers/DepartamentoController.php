@@ -54,6 +54,7 @@ class DepartamentoController extends Controller
      */
     public function show(Departamento $departamento)
     {
+        $empleado = Empleado::with('departamento')->findOrFail($departamento);
         return view('departamentos.show', compact('departamento'));
     }
 

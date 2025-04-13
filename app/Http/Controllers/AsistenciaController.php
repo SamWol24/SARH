@@ -56,6 +56,7 @@ class AsistenciaController extends Controller
      */
     public function show(Asistencia $asistencia)
     {
+        $asistencia = Asistencia::with('empleado')->findOrFail($asistencia);
         return view('asistencias.show', compact('asistencia'));
     }
 

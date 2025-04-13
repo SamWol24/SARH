@@ -58,6 +58,7 @@ class EmpleadoController extends Controller
      */
     public function show(Empleado $empleado)
     {
+        $empleado = Empleado::with('departamento')->findOrFail($empleado);
         return view('empleados.show', compact('empleado'));
     }
 

@@ -9,7 +9,7 @@ use App\Http\Controllers\AsistenciaController;
 Route::get('/', function () {
     return view('welcome');
 });
-
+//rutas protegida con autenticacion
 Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', function () {
         return view('dashboard');
