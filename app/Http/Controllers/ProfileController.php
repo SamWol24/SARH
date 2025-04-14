@@ -8,9 +8,20 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
+use Illuminate\Support\Facades\Hash; // Importa Hash para cifrar contraseñas
+
 
 class ProfileController extends Controller
 {
+    /**
+ * Display the user's profile.
+ */
+public function show(Request $request): View
+{
+    return view('profile', [
+        'user' => $request->user(),
+    ]);
+}
     /**
      * Display the user's profile form.
      */
@@ -34,27 +45,44 @@ class ProfileController extends Controller
 
         $request->user()->save();
 
-        return Redirect::route('profile.edit')->with('status', 'profile-updated');
+        return Redirect::route('profile.show')->with('status', 'profile-updated');
     }
 
+    
+    public function updatePassword(Request $request): RedirectResponse
+    {
+        $request->validate([
+            'current_password' => ['required', 'current_password'],
+            'new_password' => ['required', 'string', 'min:8'],
+        ]);
+    
+        $user = $request->user();
+    
+        $user->update([
+            'password' => Hash::make($request->new_password),
+        ]);
+    
+        return redirect()->route('profile.edit')->with('status', 'password-updated');
+    }
+    
     /**
      * Delete the user's account.
      */
     public function destroy(Request $request): RedirectResponse
-    {
-        $request->validateWithBag('userDeletion', [
-            'password' => ['required', 'current_password'],
-        ]);
+{
+    $request->validateWithBag('userDeletion', [
+        'password' => ['required', 'current_password'],
+    ]);
 
-        $user = $request->user();
+    $user = $request->user();
 
-        Auth::logout();
+    Auth::logout();
 
-        $user->delete();
+    $user->delete();
 
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
+    $request->session()->invalidate();
+    $request->session()->regenerateToken();
 
-        return Redirect::to('/');
-    }
+    return Redirect::to('/');
+}
 }
